@@ -1,5 +1,6 @@
-import { Home, User, CheckCircle, Info, Settings, LogIn } from "lucide-react";
+import { Home, User, CheckCircle, Info, Settings, LogOut } from "lucide-react";
 import { NavLink, useLocation } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
 import {
   Sidebar,
   SidebarContent,
@@ -18,13 +19,17 @@ const items = [
   { title: "Done Activities", url: "/done", icon: CheckCircle },
   { title: "About To-Do", url: "/about", icon: Info },
   { title: "Settings", url: "/settings", icon: Settings },
-  { title: "Login", url: "/login", icon: LogIn },
 ];
 
 export function AppSidebar() {
   const { state } = useSidebar();
   const location = useLocation();
+  const { signOut, user } = useAuth();
   const collapsed = state === "collapsed";
+
+  const handleSignOut = async () => {
+    await signOut();
+  };
 
   const isActive = (path: string) => {
     if (path === "/") {
@@ -59,6 +64,12 @@ export function AppSidebar() {
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
+              <SidebarMenuItem>
+                <SidebarMenuButton onClick={handleSignOut} className="hover:bg-accent/50">
+                  <LogOut className="h-4 w-4" />
+                  {!collapsed && <span>Sign Out</span>}
+                </SidebarMenuButton>
+              </SidebarMenuItem>
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
