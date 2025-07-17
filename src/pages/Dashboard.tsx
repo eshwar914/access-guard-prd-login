@@ -13,11 +13,7 @@ interface Task {
 }
 
 const Dashboard = () => {
-  const [tasks, setTasks] = useState<Task[]>([
-    { id: "1", title: "Complete project documentation", completed: false, createdAt: new Date() },
-    { id: "2", title: "Review code changes", completed: true, createdAt: new Date() },
-    { id: "3", title: "Update dependencies", completed: false, createdAt: new Date() },
-  ]);
+  const [tasks, setTasks] = useState<Task[]>([]);
   const [newTask, setNewTask] = useState("");
 
   const addTask = () => {
@@ -84,7 +80,7 @@ const Dashboard = () => {
         {tasks.length === 0 ? (
           <Card>
             <CardContent className="text-center py-8">
-              <p className="text-muted-foreground">No tasks yet. Add your first task above!</p>
+              <p className="text-muted-foreground">No tasks have been added till now. Add your first task above!</p>
             </CardContent>
           </Card>
         ) : (

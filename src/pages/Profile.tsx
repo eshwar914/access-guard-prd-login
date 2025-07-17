@@ -4,8 +4,22 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { User, Mail, Calendar, Edit } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
 
 const Profile = () => {
+  const { user } = useAuth();
+
+  const getInitials = (email: string) => {
+    return email.substring(0, 2).toUpperCase();
+  };
+
+  const formatDate = (timestamp: string) => {
+    return new Date(timestamp).toLocaleDateString('en-US', { 
+      year: 'numeric', 
+      month: 'long' 
+    });
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -27,27 +41,27 @@ const Profile = () => {
               <Avatar className="h-20 w-20">
                 <AvatarImage src="/placeholder.svg" />
                 <AvatarFallback className="bg-primary text-primary-foreground text-xl">
-                  JD
+                  {user?.email ? getInitials(user.email) : 'U'}
                 </AvatarFallback>
               </Avatar>
               <div>
-                <h3 className="text-xl font-semibold">John Doe</h3>
-                <p className="text-muted-foreground">Productivity Enthusiast</p>
+                <h3 className="text-xl font-semibold">{user?.email || 'User'}</h3>
+                <p className="text-muted-foreground">To-Do List User</p>
               </div>
             </div>
 
             <div className="space-y-4">
               <div>
-                <Label htmlFor="name">Full Name</Label>
-                <Input id="name" value="John Doe" readOnly />
+                <Label htmlFor="name">Display Name</Label>
+                <Input id="name" value={user?.email || 'Not set'} readOnly />
               </div>
               <div>
                 <Label htmlFor="email">Email</Label>
-                <Input id="email" type="email" value="john.doe@example.com" readOnly />
+                <Input id="email" type="email" value={user?.email || 'Not available'} readOnly />
               </div>
               <div>
                 <Label htmlFor="joined">Member Since</Label>
-                <Input id="joined" value="January 2024" readOnly />
+                <Input id="joined" value={user?.created_at ? formatDate(user.created_at) : 'Not available'} readOnly />
               </div>
             </div>
           </CardContent>
@@ -70,7 +84,7 @@ const Profile = () => {
                     <p className="text-sm text-muted-foreground">All time</p>
                   </div>
                 </div>
-                <span className="text-2xl font-bold text-primary">156</span>
+                <span className="text-2xl font-bold text-primary">0</span>
               </div>
 
               <div className="flex items-center justify-between p-4 bg-accent rounded-lg">
@@ -83,7 +97,7 @@ const Profile = () => {
                     <p className="text-sm text-muted-foreground">Tasks finished</p>
                   </div>
                 </div>
-                <span className="text-2xl font-bold text-green-600">142</span>
+                <span className="text-2xl font-bold text-green-600">0</span>
               </div>
 
               <div className="flex items-center justify-between p-4 bg-accent rounded-lg">
@@ -96,12 +110,12 @@ const Profile = () => {
                     <p className="text-sm text-muted-foreground">Tasks remaining</p>
                   </div>
                 </div>
-                <span className="text-2xl font-bold text-orange-600">14</span>
+                <span className="text-2xl font-bold text-orange-600">0</span>
               </div>
 
               <div className="mt-4 p-4 bg-primary/10 rounded-lg">
                 <p className="text-center text-primary font-medium">
-                  Completion Rate: 91%
+                  Completion Rate: 0%
                 </p>
               </div>
             </div>
