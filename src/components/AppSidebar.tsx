@@ -41,7 +41,7 @@ export function AppSidebar() {
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel className="text-primary font-semibold text-lg">
-            {!collapsed && "To-Do App"}
+            {!collapsed && "To-Do List"}
           </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
